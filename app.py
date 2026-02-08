@@ -5,7 +5,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-wife_name = "Kulsum"
+wife_name = "Meri Pyari Biwi Jaan (Kulsum)"
 
 # Rahat Indori style Hinglish shayari with emojis
 messages = [
@@ -48,3 +48,4 @@ def home():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
