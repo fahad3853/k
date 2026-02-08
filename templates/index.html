@@ -7,9 +7,10 @@
     <style>
         body {
             background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             text-align: center;
             padding: 40px;
+            overflow: hidden;
         }
 
         .card {
@@ -17,6 +18,9 @@
             padding: 25px;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 2;
+            animation: pop 0.8s ease;
         }
 
         h1 {
@@ -24,73 +28,88 @@
         }
 
         .message {
-            font-size: 18px;
-            margin: 15px 0;
-            min-height: 40px;
+            font-size: 20px;
+            margin: 20px 0;
+            min-height: 60px;
         }
 
         button {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
             background: #e91e63;
             color: white;
             border: none;
-            padding: 14px;
+            padding: 14px 22px;
             font-size: 16px;
             border-radius: 30px;
             cursor: pointer;
         }
 
-        .counter {
-            font-size: 16px;
-            color: #555;
-            margin-top: 10px;
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            bottom: -20px;
+            font-size: 24px;
+            animation: floatUp 6s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-120vh); opacity: 0; }
+        }
+
+        @keyframes pop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Floating hearts container -->
+    <div id="hearts"></div>
+
     <div class="card">
-        <h1>❤️ Kulsum ❤️</h1>
-
-        <p class="message" id="message">
-            Tap a button 💕
-        </p>
-
-        <button onclick="sendHug()">🤗 Send Hug</button>
-        <button onclick="sendKiss()">😘 Send Kiss</button>
-        <button onclick="sendLove()">💖 I Love You</button>
-
-        <div class="counter">
-            🤗 Hugs: <span id="hugCount">0</span><br>
-            😘 Kisses: <span id="kissCount">0</span>
-        </div>
+        <h1>❤️ For Kulsum ❤️</h1>
+        <p class="message" id="message"></p>
+        <button onclick="showMessage()">Tap for a Surprise 💖</button>
     </div>
 
     <script>
-        let hugs = 0;
-        let kisses = 0;
+        const messageText = "{{ message }}";
+        let index = 0;
 
-        function sendHug() {
-            hugs++;
-            document.getElementById("hugCount").innerText = hugs;
-            document.getElementById("message").innerText =
-                "A warm hug just for you, Kulsum 🤗❤️";
+        function typeWriter() {
+            if (index < messageText.length) {
+                document.getElementById("message").innerHTML += messageText.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
+            }
         }
 
-        function sendKiss() {
-            kisses++;
-            document.getElementById("kissCount").innerText = kisses;
-            document.getElementById("message").innerText =
-                "A sweet kiss sent to you, Kulsum 😘💕";
+        function showMessage() {
+            index = 0;
+            document.getElementById("message").innerHTML = "";
+            typeWriter();
         }
 
-        function sendLove() {
-            document.getElementById("message").innerText =
-                "Kulsum, no matter what… I choose you. Always 💖";
-        }
+        // Auto start typing
+        typeWriter();
+
+        // Create floating hearts
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }, 800);
     </script>
 
 </body>
