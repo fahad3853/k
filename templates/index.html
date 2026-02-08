@@ -77,8 +77,10 @@
     </div>
 
     <script>
-    const messageText = {{ message | tojson }};
+    // Get all messages from Flask
+    const messages = {{ messages | tojson }};
     let index = 0;
+    let messageText = messages[Math.floor(Math.random() * messages.length)];
 
     function typeWriter() {
         if (index < messageText.length) {
@@ -89,15 +91,17 @@
     }
 
     function showMessage() {
+        // Pick a new random message each click
+        messageText = messages[Math.floor(Math.random() * messages.length)];
         index = 0;
         document.getElementById("message").innerHTML = "";
         typeWriter();
     }
 
-    // Auto start typing
+    // Auto start typing on page load
     typeWriter();
 
-    // Create floating hearts
+    // Floating hearts
     setInterval(() => {
         const heart = document.createElement("div");
         heart.className = "heart";
@@ -115,5 +119,6 @@
 
 </body>
 </html>
+
 
 
