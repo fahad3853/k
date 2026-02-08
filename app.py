@@ -1,5 +1,4 @@
 import os
-import random
 from flask import Flask, render_template
 from datetime import datetime
 
@@ -17,18 +16,17 @@ messages = [
 
 @app.route("/")
 def home():
-    message = random.choice(messages)
-
     hour = datetime.now().hour
     if hour < 12:
-        greeting = f"Good Morning, Kulsum ☀️"
+        greeting = "Good Morning, Kulsum ☀️"
     elif hour < 18:
-        greeting = f"Good Afternoon, My Love 💕"
+        greeting = "Good Afternoon, My Love 💕"
     else:
-        greeting = f"Good Night, Kulsum 🌙❤️"
+        greeting = "Good Night, Kulsum 🌙❤️"
 
     return render_template(
         "index.html",
+        messages=messages,
         greeting=greeting,
         name=wife_name
     )
@@ -36,4 +34,3 @@ def home():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-
