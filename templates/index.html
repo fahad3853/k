@@ -17,15 +17,22 @@
             padding: 25px;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: fadeIn 1.2s ease-in-out;
         }
 
         h1 {
             color: #e91e63;
         }
 
+        .greeting {
+            font-size: 18px;
+            color: #555;
+        }
+
         .message {
             font-size: 20px;
             margin: 20px 0;
+            color: #333;
         }
 
         button {
@@ -37,14 +44,20 @@
             border-radius: 10px;
             cursor: pointer;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 
 <body>
     <div class="card">
-        <h1>❤️ My Love ❤️</h1>
+        <h1>❤️ For {{ name }} ❤️</h1>
+        <p class="greeting">{{ greeting }}</p>
         <p class="message">{{ message }}</p>
-        <button onclick="location.reload()">New Message 💌</button>
+        <button onclick="location.reload()">New Love Message 💌</button>
     </div>
 </body>
 </html>
