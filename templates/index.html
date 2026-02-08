@@ -79,8 +79,9 @@
     <script>
     // Get all messages from Flask
     const messages = {{ messages | tojson }};
-    let index = 0;
-    let messageText = messages[Math.floor(Math.random() * messages.length)];
+    let index = 0;           // current character index for typewriter
+    let msgNumber = 0;       // which message we are showing
+    let messageText = messages[msgNumber];
 
     function typeWriter() {
         if (index < messageText.length) {
@@ -91,14 +92,19 @@
     }
 
     function showMessage() {
-        // Pick a new random message each click
-        messageText = messages[Math.floor(Math.random() * messages.length)];
+        // Move to next message in sequence
+        msgNumber++;
+        if (msgNumber >= messages.length) {
+            msgNumber = 0; // loop back to first message
+        }
+
+        messageText = messages[msgNumber];
         index = 0;
         document.getElementById("message").innerHTML = "";
         typeWriter();
     }
 
-    // Auto start typing on page load
+    // Auto start first message on page load
     typeWriter();
 
     // Floating hearts
@@ -117,8 +123,10 @@
 </script>
 
 
+
 </body>
 </html>
+
 
 
 
