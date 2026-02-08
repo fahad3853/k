@@ -24,6 +24,7 @@ def home():
     else:
         greeting = "Good Night, Kulsum 🌙❤️"
 
+    # ✅ Send the full messages list
     return render_template(
         "index.html",
         messages=messages,
