@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ title_name }} ❤️</title>
+    <title>For Kulsum❤️</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         body {
             background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
@@ -11,6 +12,7 @@
             padding: 40px;
             overflow: hidden;
         }
+
         .card {
             background: white;
             padding: 25px;
@@ -19,95 +21,90 @@
             position: relative;
             z-index: 2;
             animation: pop 0.8s ease;
-            max-width: 500px;
-            margin: 20px auto;
         }
-        h1 { color: #e91e63; }
-        .message { font-size: 20px; margin: 20px 0; min-height: 60px; }
-        button { 
-            background: #e91e63; 
-            color: white; 
-            border: none; 
-            padding: 14px 22px; 
-            font-size: 16px; 
-            border-radius: 30px; 
-            cursor: pointer; 
-            margin: 5px;
+
+        h1 {
+            color: #e91e63;
         }
-        input { padding: 8px; font-size: 16px; border-radius: 8px; border: 1px solid #ccc; }
+
+        .message {
+            font-size: 20px;
+            margin: 20px 0;
+            min-height: 60px;
+        }
+
+        button {
+            background: #e91e63;
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
         /* Floating hearts */
-        .heart { position: absolute; bottom: -20px; font-size: 24px; animation: floatUp 6s linear infinite; opacity: 0.7; }
-        @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-120vh); opacity: 0; } }
-        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        #loveMeter { width: 100%; background: #eee; height: 20px; border-radius: 10px; margin-top: 10px; overflow: hidden; }
-        #loveFill { width: 0%; height: 100%; background: #e91e63; transition: width 0.3s; }
-        #secretMsg, #memoryImg { display: none; margin-top: 10px; }
+        .heart {
+            position: absolute;
+            bottom: -20px;
+            font-size: 24px;
+            animation: floatUp 6s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-120vh); opacity: 0; }
+        }
+
+        @keyframes pop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Floating hearts container -->
     <div id="hearts"></div>
 
     <div class="card">
-        <h1>❤️ {{ heading_name }} ❤️</h1>
+        <h1>❤️ Meri Pyari Biwi Jaan(Kulsum) ❤️</h1>
         <p class="message" id="message"></p>
         <button onclick="showMessage()">Tap for a Surprise 💖</button>
-
-        <!-- 1️⃣ Marriage proposal -->
-        <div>
-            <button onclick="marryAgain()">💍 Will you marry me again?</button>
-            <p id="marryMsg"></p>
-        </div>
-
-        <!-- 2️⃣ Secret message unlock -->
-        <div>
-            <input type="password" id="pin" placeholder="Enter PIN 💌">
-            <button onclick="unlockSecret()">Unlock Secret 💌</button>
-            <p id="secretMsg">🎉 Congratulations! Secret message unlocked! 💕</p>
-        </div>
-
-        <!-- 3️⃣ Date of marriage -->
-        <div>
-            <input type="date" id="marriedDate">
-            <button onclick="showDate()">📅 Celebrate Date</button>
-            <p id="dateMsg"></p>
-        </div>
-
-        <!-- 4️⃣ Reveal memory/photo -->
-        <div>
-            <button onclick="revealMemory()">📸 Click to reveal memory</button>
-            <img id="memoryImg" src="https://i.imgur.com/3G9pWfM.jpg" alt="Memory" width="100%">
-        </div>
-
-        <!-- 5️⃣ Love meter -->
-        <div>
-            <button onclick="fillLove()">💓 Click to fill love meter</button>
-            <div id="loveMeter">
-                <div id="loveFill"></div>
-            </div>
-        </div>
     </div>
 
     <script>
-    // Typewriter messages
+    // Get all messages from Flask
     const messages = {{ messages | tojson }};
-    let index = 0, msgNumber = 0, messageText = messages[msgNumber];
+    let index = 0;           // current character index for typewriter
+    let msgNumber = 0;       // which message we are showing
+    let messageText = messages[msgNumber];
 
     function typeWriter() {
-        if(index < messageText.length){
+        if (index < messageText.length) {
             document.getElementById("message").innerHTML += messageText.charAt(index);
             index++;
-            setTimeout(typeWriter,50);
+            setTimeout(typeWriter, 50);
         }
     }
-    function showMessage(){
+
+    function showMessage() {
+        // Move to next message in sequence
         msgNumber++;
-        if(msgNumber >= messages.length) msgNumber = 0;
+        if (msgNumber >= messages.length) {
+            msgNumber = 0; // loop back to first message
+        }
+
         messageText = messages[msgNumber];
         index = 0;
         document.getElementById("message").innerHTML = "";
         typeWriter();
     }
+
+    // Auto start first message on page load
     typeWriter();
 
     // Floating hearts
@@ -115,45 +112,22 @@
         const heart = document.createElement("div");
         heart.className = "heart";
         heart.innerHTML = "❤️";
-        heart.style.left = Math.random()*100+"vw";
-        heart.style.animationDuration = (Math.random()*3+4)+"s";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
         document.body.appendChild(heart);
-        setTimeout(()=>heart.remove(),7000);
-    },800);
 
-    // 1️⃣ Marriage proposal
-    function marryAgain(){ document.getElementById("marryMsg").innerText = "Yes! 💕 I will marry you again! 💍"; }
+        setTimeout(() => {
+            heart.remove();
+        }, 7000);
+    }, 800);
+</script>
 
-    // 2️⃣ Secret message unlock
-    function unlockSecret(){
-        const pin = document.getElementById("pin").value;
-        if(pin === "1234"){ // Change PIN here
-            document.getElementById("secretMsg").style.display = "block";
-        }else{
-            alert("Incorrect PIN 💔");
-        }
-    }
 
-    // 3️⃣ Date of marriage
-    function showDate(){
-        const date = document.getElementById("marriedDate").value;
-        if(date){
-            document.getElementById("dateMsg").innerText = "Celebrating our special day: " + date + " 💖";
-        } else {
-            alert("Please select a date 📅");
-        }
-    }
 
-    // 4️⃣ Reveal memory/photo
-    function revealMemory(){ document.getElementById("memoryImg").style.display = "block"; }
-
-    // 5️⃣ Love meter
-    let lovePercent = 0;
-    function fillLove(){
-        lovePercent += 10;
-        if(lovePercent > 100) lovePercent = 100;
-        document.getElementById("loveFill").style.width = lovePercent + "%";
-    }
-    </script>
 </body>
 </html>
+
+
+
+
+
