@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>For My Love ❤️</title>
+    <title>For Kulsum ❤️</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         body {
             background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             text-align: center;
             padding: 40px;
+            overflow: hidden;
         }
 
         .card {
@@ -17,47 +18,99 @@
             padding: 25px;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            animation: fadeIn 1.2s ease-in-out;
+            position: relative;
+            z-index: 2;
+            animation: pop 0.8s ease;
         }
 
         h1 {
             color: #e91e63;
         }
 
-        .greeting {
-            font-size: 18px;
-            color: #555;
-        }
-
         .message {
             font-size: 20px;
             margin: 20px 0;
-            color: #333;
+            min-height: 60px;
         }
 
         button {
             background: #e91e63;
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 14px 22px;
             font-size: 16px;
-            border-radius: 10px;
+            border-radius: 30px;
             cursor: pointer;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            bottom: -20px;
+            font-size: 24px;
+            animation: floatUp 6s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-120vh); opacity: 0; }
+        }
+
+        @keyframes pop {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
 
 <body>
+
+    <!-- Floating hearts container -->
+    <div id="hearts"></div>
+
     <div class="card">
-        <h1>❤️ For {{ name }} ❤️</h1>
-        <p class="greeting">{{ greeting }}</p>
-        <p class="message">{{ message }}</p>
-        <button onclick="location.reload()">New Love Message 💌</button>
+        <h1>❤️ For Kulsum ❤️</h1>
+        <p class="message" id="message"></p>
+        <button onclick="showMessage()">Tap for a Surprise 💖</button>
     </div>
+
+    <script>
+        const messageText = "{{ message }}";
+        let index = 0;
+
+        function typeWriter() {
+            if (index < messageText.length) {
+                document.getElementById("message").innerHTML += messageText.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        function showMessage() {
+            index = 0;
+            document.getElementById("message").innerHTML = "";
+            typeWriter();
+        }
+
+        // Auto start typing
+        typeWriter();
+
+        // Create floating hearts
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }, 800);
+    </script>
+
 </body>
 </html>
