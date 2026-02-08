@@ -77,42 +77,43 @@
     </div>
 
     <script>
-        const messageText = {{ message | tojson }};
+    const messageText = {{ message | tojson }};
+    let index = 0;
 
-        let index = 0;
-
-        function typeWriter() {
-            if (index < messageText.length) {
-                document.getElementById("message").innerHTML += messageText.charAt(index);
-                index++;
-                setTimeout(typeWriter, 50);
-            }
+    function typeWriter() {
+        if (index < messageText.length) {
+            document.getElementById("message").innerHTML += messageText.charAt(index);
+            index++;
+            setTimeout(typeWriter, 50);
         }
+    }
 
-        function showMessage() {
-            index = 0;
-            document.getElementById("message").innerHTML = "";
-            typeWriter();
-        }
-
-        // Auto start typing
+    function showMessage() {
+        index = 0;
+        document.getElementById("message").innerHTML = "";
         typeWriter();
+    }
 
-        // Create floating hearts
-        setInterval(() => {
-            const heart = document.createElement("div");
-            heart.className = "heart";
-            heart.innerHTML = "❤️";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
-            document.body.appendChild(heart);
+    // Auto start typing
+    typeWriter();
 
-            setTimeout(() => {
-                heart.remove();
-            }, 7000);
-        }, 800);
-    </script>
+    // Create floating hearts
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 7000);
+    }, 800);
+</script>
+
 
 </body>
 </html>
+
 
